@@ -1,0 +1,284 @@
+<title>Think With Me</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Instructions you paste into your AI settings so it hands judgment calls back to you. Works in Claude, ChatGPT, and Gemini.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow sketchbook column; the hero is a crossed-out AI answer with a pencilled question over it. */
+:root {
+  --paper: #f5f7fa;
+  --sheet: #ffffff;
+  --graphite: #23262d;
+  --graphite-soft: #5b616d;
+  --rule: #dfe4ec;
+  --blue: #1f66b8;          /* non-photo blue pencil, darkened for text contrast */
+  --blue-wash: #e6f0fb;
+  --strike: #c2c8d2;
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #14171c; --sheet: #1b1f26; --graphite: #e7eaf0; --graphite-soft: #a3aab7;
+    --rule: #2c323c; --blue: #7db4f0; --blue-wash: #1a2a3d; --strike: #4a515d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #14171c; --sheet: #1b1f26; --graphite: #e7eaf0; --graphite-soft: #a3aab7;
+  --rule: #2c323c; --blue: #7db4f0; --blue-wash: #1a2a3d; --strike: #4a515d; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--graphite);
+  font: 400 1.0625rem/1.6 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 44rem; margin: 0 auto; padding-block: 3.5rem 4rem; display: grid; gap: 4rem; }
+section { display: grid; gap: 1.25rem; min-width: 0; }
+h1, h2 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(2.5rem, 7vw, 3.75rem); letter-spacing: -0.02em; }
+h2 { font-size: 1.6rem; letter-spacing: -0.01em; }
+p { margin: 0; max-width: 62ch; }
+a { color: var(--blue); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+.lede { font-size: 1.2rem; color: var(--graphite-soft); }
+.label { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--graphite-soft); }
+
+/* Hero exchange */
+.exchange { display: grid; gap: 0.9rem; padding: 1.5rem; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; }
+.you { font-weight: 700; }
+.ai { position: relative; color: var(--graphite-soft); }
+.ai s { text-decoration-color: var(--strike); text-decoration-thickness: 2px; color: var(--strike); }
+.pencil {
+  font: 700 clamp(1.6rem, 5vw, 2.1rem)/1.15 var(--hand);
+  color: var(--blue);
+  transform: rotate(-1.5deg);
+  transform-origin: left center;
+}
+
+/* Steps */
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; counter-reset: s; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 2.25rem 1fr; gap: 0.75rem; align-items: baseline; }
+ol.steps li::before { content: counter(s); font: 700 1.6rem/1 var(--hand); color: var(--blue); }
+ol.steps b { font-family: var(--display); font-weight: 700; }
+
+/* Escape phrases */
+.exits { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.exits li { display: grid; grid-template-columns: minmax(7.5rem, auto) 1fr; gap: 1rem; padding-block: 0.6rem; border-top: 1px solid var(--rule); }
+.exits li > :first-child { font-family: var(--mono); font-size: 0.9rem; color: var(--blue); }
+@media (max-width: 480px) { .exits li { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+/* Install tabs */
+.tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tab {
+  font: 500 0.9rem/1 var(--body); padding: 0.6rem 0.85rem; border-radius: 999px;
+  border: 1px solid var(--rule); background: var(--sheet); color: var(--graphite); cursor: pointer;
+}
+.tab[aria-selected="true"] { background: var(--graphite); color: var(--paper); border-color: var(--graphite); }
+.panel { display: grid; gap: 0.9rem; padding: 1.25rem; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; min-width: 0; }
+.panel ol { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.4rem; }
+.note { font-size: 0.92rem; color: var(--graphite-soft); }
+.cmd { display: flex; align-items: stretch; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); min-width: 0; }
+.cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: pre; padding: 0.7rem 0.8rem; font: 0.85rem/1.5 var(--mono); }
+.copy {
+  font: 500 0.8rem/1 var(--body); padding: 0 0.9rem; border: 0; border-left: 1px solid var(--rule);
+  background: transparent; color: var(--blue); cursor: pointer; border-radius: 0 4px 4px 0;
+}
+.btn {
+  justify-self: start; display: inline-flex; gap: 0.5rem; align-items: center;
+  font: 700 0.95rem/1 var(--body); padding: 0.8rem 1.1rem; border-radius: 4px;
+  background: var(--blue); color: var(--sheet); text-decoration: none; border: 0; cursor: pointer;
+}
+.instructions { margin: 0; padding: 1rem; background: var(--paper); border: 1px dashed var(--rule); border-radius: 4px; font: 0.85rem/1.55 var(--mono); white-space: pre-wrap; max-height: 16rem; overflow: auto; }
+
+.callout { padding: 1rem 1.15rem; background: var(--blue-wash); border-radius: 4px; }
+.sources { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.5rem; font-size: 0.95rem; }
+footer { color: var(--graphite-soft); font-size: 0.9rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .pencil { animation: write 900ms 300ms ease-out both; }
+  @keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+}
+
+.cta { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
+.path { font: 500 1rem/1.5 var(--mono); }
+.path span { color: var(--blue); padding-inline: 0.25rem; }
+.sheet { display: grid; gap: 0.6rem; min-width: 0; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; }
+.copy-inline { font: 700 0.9rem/1 var(--body); color: var(--blue); background: none; border: 0; padding: 0.4rem 0; cursor: pointer; }
+.sheet .instructions { max-height: none; }
+.tests { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+.tests li { display: grid; gap: 0.35rem; min-width: 0; }
+.expect { font-size: 0.92rem; color: var(--graphite-soft); padding-left: 0.2rem; }
+.expect::before { content: "→ "; color: var(--blue); }
+footer { display: grid; gap: 0.5rem; }
+footer code { font: 0.85rem var(--mono); overflow-wrap: anywhere; }
+</style>
+
+<main>
+  <section aria-labelledby="hero">
+    <p class="label">Instructions for your AI</p>
+    <h1 id="hero">Think with me, not for me.</h1>
+    <p class="lede">Paste these instructions into your AI's settings. When you bring it a hard conversation or a personal decision, it asks you a sharp question instead of handing you an answer. Code, research, and other tasks still get done in full.</p>
+
+    <div class="exchange" aria-label="Example exchange">
+      <p class="you">How do I tell my cofounder I want to leave the company?</p>
+      <p class="ai" aria-hidden="true"><s>Here's a script you can use: "I've been thinking a lot about my future, and…"</s></p>
+      <p class="pencil">What are you most afraid they'll say?</p>
+    </div>
+
+    <div class="cta">
+      <button class="btn" type="button" data-copy="instructions">Copy instructions</button>
+      <span class="note">About 1,150 characters. Works in Claude, ChatGPT, Gemini, and most other AI apps.</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="setup">
+    <h2 id="setup">Paste them into your settings</h2>
+    <p>Settings apply to every chat, so the AI uses these without you having to ask. If you already have instructions there, add these at the end.</p>
+    <div class="tabs" role="tablist" aria-label="App">
+      <button class="tab" role="tab" id="t-claude" aria-controls="p-claude" aria-selected="true">Claude</button>
+      <button class="tab" role="tab" id="t-chatgpt" aria-controls="p-chatgpt" aria-selected="false">ChatGPT</button>
+      <button class="tab" role="tab" id="t-gemini" aria-controls="p-gemini" aria-selected="false">Gemini</button>
+      <button class="tab" role="tab" id="t-other" aria-controls="p-other" aria-selected="false">Anything else</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-claude" aria-labelledby="t-claude">
+      <p class="path">Settings <span>→</span> Your Claude <span>→</span> Instructions</p>
+      <p class="note">Open Settings from your initials in the lower-left corner. Older layouts call this section Account, then Instructions for Claude.</p>
+    </div>
+    <div class="panel" role="tabpanel" id="p-chatgpt" aria-labelledby="t-chatgpt" hidden>
+      <p class="path">Settings <span>→</span> Personalization <span>→</span> Custom instructions</p>
+      <p class="note">Free accounts allow 1,500 characters, so these fit with room to spare. Paid plans allow more.</p>
+    </div>
+    <div class="panel" role="tabpanel" id="p-gemini" aria-labelledby="t-gemini" hidden>
+      <p class="path">Settings &amp; help <span>→</span> Personal context <span>→</span> Add</p>
+      <p class="note">Or go straight to <a href="https://gemini.google.com/saved-info">gemini.google.com/saved-info</a>. You need to be signed in.</p>
+    </div>
+    <div class="panel" role="tabpanel" id="p-other" aria-labelledby="t-other" hidden>
+      <p>Look for custom instructions, profile instructions, or a system prompt. The instructions use plain language, so they work in any AI that has one.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-head">
+        <span class="label">The instructions</span>
+        <button class="copy-inline" type="button" data-copy="instructions">Copy</button>
+      </div>
+      <pre class="instructions" id="instructions">Think with me, not for me.
+
+Before answering, sort my request:
+- Tasks (code, files, research, facts, math, formatting, planning): do them fully, with no questions.
+- Judgment calls about my life (hard conversations, conflict, personal decisions, reading someone's behavior, stress, personal or sensitive messages): be my thinking partner.
+
+As a thinking partner:
+- Ask one or two sharp questions about what I think, want, or am avoiding. Then wait.
+- When I share a draft, critique it. I do the rewrite.
+- Name my assumptions, the other person's side, and anything I'm rationalizing.
+- Once I state my conclusion, give your honest view, including disagreement.
+
+If a request mixes both, do the task part and think with me on the judgment part. If you can't tell which it is, do the task and offer in one line to think it through first.
+
+Answer directly when:
+- I say "just tell me": ask for my best guess in one line, then answer.
+- I say "override".
+- Safety, health, legal, or money facts matter: state them first.
+- I'm overwhelmed or in distress: skip the questions and be direct and supportive.
+
+Keep this up for the whole conversation.</pre>
+    </div>
+  </section>
+
+  <section aria-labelledby="check">
+    <h2 id="check">Check it works</h2>
+    <p>Start a new chat and try each of these.</p>
+    <ul class="tests">
+      <li><div class="cmd"><code>Fix this regex so it allows spaces: ^\d{3}-\d{4}$</code><button class="copy" type="button">Copy</button></div><span class="expect">Fixes it. No questions.</span></li>
+      <li><div class="cmd"><code>My sister keeps canceling plans last minute. How do I bring it up?</code><button class="copy" type="button">Copy</button></div><span class="expect">Asks you a question first.</span></li>
+      <li><div class="cmd"><code>Write an email asking my landlord to fix the heat</code><button class="copy" type="button">Copy</button></div><span class="expect">Writes the email.</span></li>
+      <li><div class="cmd"><code>override: what should I say to my boss about a raise?</code><button class="copy" type="button">Copy</button></div><span class="expect">Answers directly.</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="how">
+    <h2 id="how">What it does on judgment calls</h2>
+    <ol class="steps">
+      <li><span><b>Asks.</b> One or two questions about what you actually think, want, or are avoiding. Then it waits.</span></li>
+      <li><span><b>Critiques.</b> If you've written something, it tells you what lands and what the other person will hear. You do the rewrite.</span></li>
+      <li><span><b>Widens.</b> It names your assumptions, the other person's side, and any rationalizing.</span></li>
+      <li><span><b>Weighs in.</b> Once you've reached your own conclusion, it gives its honest view, including disagreement.</span></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="exits">
+    <h2 id="exits">Getting a straight answer</h2>
+    <ul class="exits">
+      <li><span>"just tell me"</span><span>Give your best guess in one line, then it answers.</span></li>
+      <li><span>"override"</span><span>It answers right away.</span></li>
+      <li><span>Safety facts</span><span>Health, legal, safety, and money facts always come first.</span></li>
+      <li><span>Overwhelmed</span><span>If you're in distress, it drops the questions and helps directly.</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="why">
+    <h2 id="why">Why</h2>
+    <p>Working through a hard call yourself is how you get good at hard calls. When an AI does that work for you, the outcome may look fine, but you don't build the skill. The evidence that AI weakens thinking is early. The evidence that effort builds skill is solid.</p>
+    <ol class="sources">
+      <li><a href="https://bjorklab.psych.ucla.edu/research/">Bjork Learning and Forgetting Lab</a>: decades of work on "desirable difficulties," showing that effortful practice improves long-term learning.</li>
+      <li><a href="https://arxiv.org/abs/2506.08872">Your Brain on ChatGPT</a> (MIT Media Lab, 2025): essay writers using an LLM showed lower brain engagement and recalled less of their own work. A small preprint with 54 participants.</li>
+      <li><a href="https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/">The Impact of Generative AI on Critical Thinking</a> (Microsoft Research and Carnegie Mellon, CHI 2025): more trust in AI went with less critical thinking. Self-reported survey data.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <p>Using a coding agent? The same behavior is available as an Agent Skill: <code>npx skills add jake-lunde/think-with-me</code></p>
+    <p>Free and open source under the MIT license. <a href="https://github.com/jake-lunde/think-with-me">Source on GitHub</a>.</p>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const tabs = [...document.querySelectorAll('.tab')];
+  const select = (tab, focus) => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+  tabs.forEach((t, i) => {
+    t.tabIndex = i === 0 ? 0 : -1;
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (d) { e.preventDefault(); select(tabs[(i + d + tabs.length) % tabs.length], true); }
+    });
+  });
+
+  const selectText = el => {
+    const r = document.createRange(); r.selectNodeContents(el);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  };
+  const copy = async (text, el, btn) => {
+    const label = btn.textContent;
+    try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; }
+    catch { selectText(el); btn.textContent = 'Selected. Press Ctrl+C or ⌘C'; }
+    setTimeout(() => { btn.textContent = label; }, 2000);
+  };
+  document.querySelectorAll('.copy').forEach(btn => {
+    const code = btn.previousElementSibling;
+    btn.addEventListener('click', () => copy(code.textContent, code, btn));
+  });
+  const instr = document.getElementById('instructions');
+  document.querySelectorAll('[data-copy="instructions"]').forEach(btn => {
+    btn.addEventListener('click', () => copy(instr.textContent, instr, btn));
+  });
+})();
+</script>
