@@ -1,4 +1,4 @@
-# Think with me
+# Do the thinking
 
 Instructions you paste into your AI's settings so it hands judgment calls back to you.
 
@@ -37,10 +37,10 @@ Start a new chat and try:
 
 ## Agent Skill version
 
-For coding agents, the same behavior is packaged as an [Agent Skill](skills/think-with-me/SKILL.md). A skill loads only when the agent decides your request matches, so the pasted instructions are more reliable.
+For coding agents, the same behavior is packaged as an [Agent Skill](skills/do-the-thinking/SKILL.md). A skill loads only when the agent decides your request matches, so the pasted instructions are more reliable.
 
 ```
-npx skills add jake-lunde/think-with-me
+npx skills add jake-lunde/do-the-thinking
 ```
 
 ## License

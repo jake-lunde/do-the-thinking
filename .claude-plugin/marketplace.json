@@ -1,10 +1,10 @@
 {
-  "name": "think-with-me",
+  "name": "do-the-thinking",
   "description": "Think with me, not for me.",
   "owner": { "name": "Jake Lunde" },
   "plugins": [
     {
-      "name": "think-with-me",
+      "name": "do-the-thinking",
       "source": "./",
       "description": "Hand judgment calls back to you with sharp questions instead of answers."
     }

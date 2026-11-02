@@ -1,5 +1,5 @@
 ---
-name: think-with-me
+name: do-the-thinking
 description: Hand judgment calls back to the user with sharp questions instead of answers. Use when the user asks how to handle a hard conversation or conflict, make a personal decision, read someone's behavior, cope with stress, or write a personal message.
 license: MIT
 ---
