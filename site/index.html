@@ -132,7 +132,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .dots span,.caret{animation:none}
-  *{transition-duration:0ms!important}
+  .dots span{opacity:.7}
+  .track{transition:none}
+  .user,.end h1 span,.turn.ended .phone{transform:none!important}
 }
 </style>
 <script>document.documentElement.classList.add('js')</script>
@@ -341,6 +343,7 @@ Keep this up for the whole conversation.</pre>
   var cta = section.querySelector('.cta');
   var end = section.querySelector('.end');
   var timers = [];
+  var playing = false;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
@@ -361,6 +364,7 @@ Keep this up for the whole conversation.</pre>
   }
   function reset() {
     clear();
+    playing = false;
     section.classList.remove('ended');
     showFace(0);
     chat.classList.remove('on');
@@ -371,20 +375,28 @@ Keep this up for the whole conversation.</pre>
   }
   function play() {
     reset();
-    if (reduce) { finished(); return; }
+    playing = true;
     var t = 0;
-    BEATS.slice(BEATS.length - faces.length).forEach(function (d, i) {
+    // Reduce Motion: no rapid face flipping; hold the first face, then go to the chats.
+    if (reduce) t = 1200;
+    else BEATS.slice(BEATS.length - faces.length).forEach(function (d, i) {
       t += d;
       if (i + 1 < faces.length) at(t, function () { showFace(i + 1); });
     });
     panes.forEach(function (p, i) {
       var user = p.dataset.user, reply = p.dataset.reply;
       var inText = p.querySelector('.in-text'), out = p.querySelectorAll('.reply .w');
+      if (i > 0 && reduce) {
+        // Reduce Motion: fade between chats instead of sliding.
+        at(t, function () { chat.classList.remove('on'); });
+        t += 450;
+      }
       at(t, function () {
-        if (i === 0) { showFace(-1); chat.classList.add('on'); }
+        if (i === 0) showFace(-1);
+        chat.classList.add('on');
         track.style.transform = 'translateX(' + (-i * 100) + '%)';
       });
-      t += i === 0 ? T.fadeIn : T.push;
+      t += i === 0 || reduce ? T.fadeIn : T.push;
       for (var k = 1; k <= user.length; k++) (function (k) {
         at(t + k * T.perChar, function () { paneState(p, ['typing']); inText.textContent = user.slice(0, k); });
       })(k);
@@ -416,8 +428,11 @@ Keep this up for the whole conversation.</pre>
 
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) play(); else reset(); });
-    }, { threshold: 0.4 });
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) { if (playing) reset(); }
+        else if (e.intersectionRatio >= 0.4 && !playing) play();
+      });
+    }, { threshold: [0, 0.4] });
     io.observe(section);
   } else {
     finished();
