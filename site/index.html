@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400&family=Pacifico&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -56,13 +56,30 @@ a{color:#111214}a:hover{color:#5F6368}
 .phone .l{left:-3px;border-radius:2px 0 0 2px}
 .phone .r{right:-3px;border-radius:0 2px 2px 0}
 .screen{position:relative;aspect-ratio:9/19.5;border-radius:47px;overflow:hidden;background:#000}
-.face{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:0}
-.face.on{opacity:1}
-.boot{position:absolute;inset:0;background:#0E0F12;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px}
-.boot .tile{width:112px;height:112px;border-radius:28px;background:#16171B;box-shadow:inset 0 0 0 1px #2A2D33;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 600ms ease}
-.boot .tile img{width:72px;height:auto}
-.boot p{margin:0;font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#E8EAED;opacity:0;transition:opacity 600ms ease}
-.boot.logo .tile,.boot.hello p{opacity:1}
+.dtt-boot{position:absolute;inset:0;background:#0E0F12;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.dtt-hi{margin:0;font-family:'Pacifico',cursive;font-size:30px;line-height:1.3;color:#F2EEFB}
+.dtt-bot{opacity:0}
+.dtt-boot.on .dtt-bot{animation:dtt-pop 700ms cubic-bezier(.34,1.56,.64,1) both}
+.dtt-boot.on .dtt-bob{animation:dtt-bob 2.4s ease-in-out 700ms infinite}
+.dtt-wave{transform-box:view-box;transform-origin:98px 76px}
+.dtt-boot.on .dtt-wave{animation:dtt-wave 800ms ease-in-out 600ms 3}
+.dtt-eyes{transform-box:fill-box;transform-origin:center}
+.dtt-boot.on .dtt-eyes{animation:dtt-blink 3.2s ease-in-out 1.4s infinite}
+.dtt-boot.on .dtt-glow{animation:dtt-glow 1.6s ease-in-out infinite}
+.dtt-hi{opacity:0}
+.dtt-boot.hello .dtt-hi{animation:dtt-hello 700ms ease both}
+@keyframes dtt-pop{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes dtt-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes dtt-wave{0%,100%{transform:rotate(0)}30%{transform:rotate(22deg)}70%{transform:rotate(-10deg)}}
+@keyframes dtt-blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+@keyframes dtt-glow{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes dtt-hello{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes dtt-fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+.dtt-boot.on .dtt-bot{animation:dtt-fade 500ms ease both}
+.dtt-boot.on .dtt-bob,.dtt-boot.on .dtt-wave,.dtt-boot.on .dtt-eyes,.dtt-boot.on .dtt-glow{animation:none}
+.dtt-boot.hello .dtt-hi{animation:dtt-fade 600ms ease both}
+}
 .chat{position:absolute;inset:0;overflow:hidden;background:#0E0F12;opacity:0;transition:opacity 400ms ease}
 .chat.on{opacity:1}
 .track{display:flex;width:100%;height:100%;transition:transform 750ms cubic-bezier(.65,0,.35,1)}
@@ -106,7 +123,7 @@ a{color:#111214}a:hover{color:#5F6368}
 .turn.ended .black{opacity:1}
 .turn.ended .phone{transform:scale(.94);opacity:.55}
 html:not(.js) .phone{opacity:.35}
-html:not(.js) .face:first-of-type{opacity:1}
+html:not(.js) .dtt-bot,html:not(.js) .dtt-hi{opacity:1}
 
 /* Install */
 .install{background:#FBFBFA;padding-top:80px;padding-bottom:160px}
@@ -140,9 +157,6 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
   .dots span{opacity:.7}
   .track{transition:none}
   .user,.end h1 span,.turn.ended .phone{transform:none!important}
-  /* Reduce Motion: a short "boot" screen replaces the face flip */
-  .js .boot{display:flex}
-  .js .face{display:none}
 }
 </style>
 <script>document.documentElement.classList.add('js')</script>
@@ -181,19 +195,29 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 <div class="btn l" style="top:35%;height:60px"></div>
 <div class="btn r" style="top:28%;height:92px"></div>
 <div class="screen">
-<img class="face" src="img/faces/01.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/02.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/03.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/04.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/05.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/06.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/07.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/08.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/09.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/10.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/11.jpg" alt="" loading="lazy" decoding="async">
-<img class="face" src="img/faces/12.jpg" alt="" loading="lazy" decoding="async">
-<div class="boot"><div class="tile"><img src="img/ai-mark.svg" alt=""></div><p>I’m here to help!</p></div>
+<div class="dtt-boot">
+<div class="dtt-bot">
+<svg viewBox="0 0 120 120" width="132" height="132" aria-hidden="true" style="display: block; overflow: visible">
+<g class="dtt-bob">
+<path d="M60 24 L60 12" stroke="#F2EEFB" stroke-width="4" stroke-linecap="round"></path>
+<circle class="dtt-glow" cx="60" cy="9" r="6.5" fill="#FF9DBA"></circle>
+<path d="M22 78 L13 92" stroke="#F2EEFB" stroke-width="13" stroke-linecap="round"></path>
+<g class="dtt-wave"><path d="M98 76 L111 54" stroke="#F2EEFB" stroke-width="13" stroke-linecap="round"></path></g>
+<rect x="16" y="22" width="88" height="84" rx="36" fill="#F2EEFB"></rect>
+<g class="dtt-eyes">
+<ellipse cx="45" cy="61" rx="6" ry="7.5" fill="#1A1B1E"></ellipse>
+<ellipse cx="75" cy="61" rx="6" ry="7.5" fill="#1A1B1E"></ellipse>
+<circle cx="47.2" cy="58" r="2.1" fill="#FFFFFF"></circle>
+<circle cx="77.2" cy="58" r="2.1" fill="#FFFFFF"></circle>
+</g>
+<ellipse cx="33" cy="75" rx="7" ry="4.2" fill="#FF9DBA" opacity="0.6"></ellipse>
+<ellipse cx="87" cy="75" rx="7" ry="4.2" fill="#FF9DBA" opacity="0.6"></ellipse>
+<path d="M54 74 Q60 81 66 74" stroke="#1A1B1E" stroke-width="3" fill="none" stroke-linecap="round"></path>
+</g>
+</svg>
+</div>
+<p class="dtt-hi">I’m here to help!</p>
+</div>
 <div class="chat"><div class="track">
 <div class="pane" data-user="My best friend forgot my birthday again. Write a text telling her how hurt I am." data-reply="Before we write it: what do you want to happen after she reads it? And is this only about the birthday?">
 <div class="label mono">01 · A friend</div>
@@ -302,6 +326,33 @@ Keep this up for the whole conversation.</pre>
 
 <script>
 (function () {
+  // ---- Haptics (phones only, best effort) ----
+  // Android: Vibration API. iOS Safari has no Vibration API; tapping a hidden
+  // <input switch> gives the system's own tick, so we click one programmatically.
+  // Browsers may ignore haptics that aren't tied to a tap.
+  var touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  var hapticLabel = null;
+  function haptic(n) {
+    if (!touch) return;
+    n = n || 1;
+    try {
+      if (navigator.vibrate) { navigator.vibrate(n > 1 ? [12, 60, 12] : 12); return; }
+      if (!hapticLabel) {
+        var id = 'dtt-haptic';
+        var input = document.createElement('input');
+        input.type = 'checkbox'; input.id = id; input.setAttribute('switch', '');
+        input.tabIndex = -1; input.setAttribute('aria-hidden', 'true');
+        hapticLabel = document.createElement('label');
+        hapticLabel.htmlFor = id; hapticLabel.setAttribute('aria-hidden', 'true');
+        var box = document.createElement('div');
+        box.style.cssText = 'position:fixed;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;left:-9px;top:0';
+        box.appendChild(input); box.appendChild(hapticLabel);
+        document.body.appendChild(box);
+      }
+      for (var k = 0; k < n; k++) setTimeout(function () { hapticLabel.click(); }, k * 70);
+    } catch (e) {}
+  }
+
   // ---- Install tabs + copy ----
   var WHERE = {
     chatgpt: 'Open Settings → Personalization → Custom instructions.',
@@ -323,6 +374,7 @@ Keep this up for the whole conversation.</pre>
     var text = pre.textContent;
     var done = function () {
       copyBtn.textContent = 'Copied';
+      haptic(2);
       clearTimeout(copyTimer);
       copyTimer = setTimeout(function () { copyBtn.textContent = 'Copy'; }, 2000);
     };
@@ -335,17 +387,16 @@ Keep this up for the whole conversation.</pre>
     var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
   }
 
-  // ---- The turn: faces flip, three chats, screen goes black, headline ----
-  var BEATS = [520, 460, 410, 360, 320, 280, 250, 225, 205, 190, 180, 700]; // per face
+  // ---- The turn: the AI boots up, three chats, screen goes black, headline ----
+  var BOOT = { on: 300, hello: 1300, chats: 3600 };
   var T = {
     fadeIn: 600, perChar: 34, send: 350, beforeDots: 700, dots: 1700,
     perWord: 110, sentence: 700, comma: 250, hold: 3600, push: 750,
     black: 900, word: 380, sub: 900, cta: 800
   };
   var section = document.getElementById('turn');
-  var faces = section.querySelectorAll('.face');
   var chat = section.querySelector('.chat');
-  var boot = section.querySelector('.boot');
+  var boot = section.querySelector('.dtt-boot');
   var track = section.querySelector('.track');
   var panes = section.querySelectorAll('.pane');
   var words = section.querySelectorAll('.end h1 span');
@@ -358,7 +409,6 @@ Keep this up for the whole conversation.</pre>
 
   function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
   function clear() { timers.forEach(clearTimeout); timers = []; }
-  function showFace(i) { faces.forEach(function (f, k) { f.classList.toggle('on', k === i); }); }
   function paneState(p, cls) {
     ['typing', 'sent', 'thinking'].forEach(function (c) { p.classList.toggle(c, cls.indexOf(c) > -1); });
   }
@@ -375,9 +425,8 @@ Keep this up for the whole conversation.</pre>
   function reset() {
     clear();
     playing = false;
-    boot.classList.remove('logo', 'hello');
+    boot.classList.remove('on', 'hello');
     section.classList.remove('ended');
-    showFace(0);
     chat.classList.remove('on');
     track.style.transform = 'translateX(0)';
     panes.forEach(resetPane);
@@ -387,17 +436,10 @@ Keep this up for the whole conversation.</pre>
   function play() {
     reset();
     playing = true;
-    var t = 0;
-    // Reduce Motion: no rapid face flipping; a quick boot screen instead.
-    if (reduce) {
-      at(300, function () { boot.classList.add('logo'); });
-      at(1100, function () { boot.classList.add('hello'); });
-      t = 2900;
-    }
-    else BEATS.slice(BEATS.length - faces.length).forEach(function (d, i) {
-      t += d;
-      if (i + 1 < faces.length) at(t, function () { showFace(i + 1); });
-    });
+    // The AI boots up and says hello (CSS swaps the motion for fades under Reduce Motion).
+    at(BOOT.on, function () { boot.classList.add('on'); });
+    at(BOOT.hello, function () { boot.classList.add('hello'); });
+    var t = BOOT.chats;
     panes.forEach(function (p, i) {
       var user = p.dataset.user, reply = p.dataset.reply;
       var inText = p.querySelector('.in-text'), out = p.querySelectorAll('.reply .w');
@@ -407,7 +449,6 @@ Keep this up for the whole conversation.</pre>
         t += 450;
       }
       at(t, function () {
-        if (i === 0) showFace(-1);
         chat.classList.add('on');
         track.style.transform = 'translateX(' + (-i * 100) + '%)';
       });
@@ -425,7 +466,7 @@ Keep this up for the whole conversation.</pre>
       out.forEach(function (span, k) {
         var w = span.textContent;
         d += T.perWord;
-        at(t + d, function () { span.classList.add('on'); });
+        at(t + d, function () { span.classList.add('on'); if (k === 0) haptic(1); });
         if (k < out.length - 1) {
           if (/[.?!]$/.test(w)) d += T.sentence;
           else if (/[:;,]$/.test(w)) d += T.comma;
@@ -435,7 +476,7 @@ Keep this up for the whole conversation.</pre>
     });
     at(t, function () { section.classList.add('ended'); });
     t += T.black;
-    words.forEach(function (w, k) { at(t + k * T.word, function () { w.classList.add('on'); }); });
+    words.forEach(function (w, k) { at(t + k * T.word, function () { w.classList.add('on'); haptic(1); }); });
     t += (words.length - 1) * T.word + T.sub;
     at(t, function () { sub.classList.add('on'); });
     at(t + T.cta, function () { cta.classList.add('on'); end.classList.add('live'); });
