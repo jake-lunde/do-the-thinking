@@ -249,7 +249,7 @@ Do everything else fully, no questions. If a request mixes both, do the task par
 <div class="me">
 <img src="img/jake.png" alt="" width="44" height="44">
 <div>
-<strong>Thought up by <a href="https://www.lunde.co">Jake</a></strong>
+<strong>Thought up by <a href="https://www.lunde.co" id="site-link">Jake</a></strong>
 </div>
 </div>
 <div class="links">
@@ -318,6 +318,9 @@ Do everything else fully, no questions. If a request mixes both, do the task par
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done, function () { selectPre(); });
     } else { selectPre(); }
+  });
+  document.getElementById('site-link').addEventListener('click', function () {
+    try { window.va('event', { name: 'Clicked lunde.co' }); } catch (e) {}
   });
   function selectPre() {
     var r = document.createRange(); r.selectNodeContents(pre);
