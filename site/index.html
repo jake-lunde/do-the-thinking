@@ -306,6 +306,8 @@ Do everything else fully, no questions. If a request mixes both, do the task par
   var pre = document.getElementById('instructions');
   var copyTimer;
   copyBtn.addEventListener('click', function () {
+    var ai = document.querySelector('.tabs button[aria-pressed="true"]');
+    try { window.va('event', { name: 'Copied instructions', data: { ai: ai ? ai.dataset.tab : 'unknown' } }); } catch (e) {}
     var text = pre.textContent;
     var done = function () {
       copyBtn.textContent = 'Copied';
