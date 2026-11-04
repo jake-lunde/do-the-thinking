@@ -1,5 +1,7 @@
 # Do the thinking
 
+**[dothethinking.com](https://dothethinking.com)**
+
 Instructions you paste into your AI's settings so it hands judgment calls back to you.
 
 Ask about a hard conversation, a conflict, or a personal decision, and the AI asks you one or two sharp questions instead of handing you an answer. Code, research, and other tasks still get done in full.
@@ -8,7 +10,7 @@ Working through a hard call yourself is how you get good at hard calls. These in
 
 ## Set up
 
-Copy everything in [`INSTRUCTIONS.txt`](INSTRUCTIONS.txt) (about 1,150 characters) and paste it here:
+Copy everything in [`INSTRUCTIONS.txt`](INSTRUCTIONS.txt) (about 650 characters) and paste it here:
 
 | App | Where to paste |
 | --- | --- |
@@ -30,7 +32,7 @@ Start a new chat and try:
 
 ## Getting a straight answer
 
-- Say **"just tell me"**: give your best guess in one line, then it answers.
+- Say **"just tell me"**: it answers right away.
 - Say **"override"**: it answers right away.
 - Safety, health, legal, and money facts always come first.
 - If you're overwhelmed, it drops the questions and helps directly.

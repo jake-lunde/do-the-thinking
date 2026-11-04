@@ -171,11 +171,11 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 <div class="btn r" style="top:28%;height:92px"></div>
 <div class="screen">
 <div class="chat"><div class="track">
-<div class="pane" data-user="My best friend forgot my birthday again. Write a text telling her how hurt I am." data-reply="Before we write it: what do you want to happen after she reads it? And is this only about the birthday?">
+<div class="pane" data-user="My best friend forgot my birthday again. Write a text telling her how hurt I am." data-reply="Before we write it: what do you want to happen after she reads it?">
 <div class="label mono">01 · A friend</div>
 <div class="msgs">
 <div class="user">My best friend forgot my birthday again. Write a text telling her how hurt I am.</div>
-<div class="answer"><div class="dots"><span>•</span><span>•</span><span>•</span></div><div class="reply"><span class="w">Before</span> <span class="w">we</span> <span class="w">write</span> <span class="w">it:</span> <span class="w">what</span> <span class="w">do</span> <span class="w">you</span> <span class="w">want</span> <span class="w">to</span> <span class="w">happen</span> <span class="w">after</span> <span class="w">she</span> <span class="w">reads</span> <span class="w">it?</span> <span class="w">And</span> <span class="w">is</span> <span class="w">this</span> <span class="w">only</span> <span class="w">about</span> <span class="w">the</span> <span class="w">birthday?</span></div></div>
+<div class="answer"><div class="dots"><span>•</span><span>•</span><span>•</span></div><div class="reply"><span class="w">Before</span> <span class="w">we</span> <span class="w">write</span> <span class="w">it:</span> <span class="w">what</span> <span class="w">do</span> <span class="w">you</span> <span class="w">want</span> <span class="w">to</span> <span class="w">happen</span> <span class="w">after</span> <span class="w">she</span> <span class="w">reads</span> <span class="w">it?</span></div></div>
 <div class="input"><span class="in-text">Message</span><span class="caret"></span></div>
 </div>
 </div>
@@ -202,7 +202,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 </div>
 <div class="sr-only">
 <p>Three examples of an AI with these instructions:</p>
-<p>A friend. Someone asks: “My best friend forgot my birthday again. Write a text telling her how hurt I am.” The AI replies: “Before we write it: what do you want to happen after she reads it? And is this only about the birthday?”</p>
+<p>A friend. Someone asks: “My best friend forgot my birthday again. Write a text telling her how hurt I am.” The AI replies: “Before we write it: what do you want to happen after she reads it?”</p>
 <p>Something to make. Someone asks: “Give me an idea for my next painting.” The AI replies: “What have you seen this week that you can’t stop thinking about?”</p>
 <p>A sympathy card. Someone asks: “Write a sympathy card for my neighbor. Her husband died last week.” The AI replies: “What’s one thing you remember about him, or them as a couple? Start there. She can tell your words from mine.”</p>
 </div>
@@ -216,8 +216,8 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 <section class="install pad" id="install">
 <div class="wrap">
 <div class="how">
-<h2>Put it in your AI.</h2>
-<p>On judgment calls it asks before it answers. On code, facts and lookups it just does the work.</p>
+<h2>Paste it in your AI.<br>Be yourself again.</h2>
+<p>That’s it. On judgment calls it asks before it answers. On code, facts and lookups it just does the work.</p>
 <div class="tabs" role="group" aria-label="Your AI">
 <button type="button" data-tab="chatgpt" aria-pressed="true">ChatGPT</button>
 <button type="button" data-tab="claude" aria-pressed="false">Claude</button>
@@ -226,7 +226,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 </div>
 <ol>
 <li>Copy the instructions.</li>
-<li id="where">Open Settings → Personalization → Custom instructions.</li>
+<li id="where">Open Settings → Personalization → Custom instructions. In the phone app it’s Settings → Customize ChatGPT.</li>
 <li>Paste and save. Start a new chat.</li>
 </ol>
 </div>
@@ -235,27 +235,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 <span class="mono">instructions.txt</span>
 <button type="button" class="copy" id="copy">Copy</button>
 </div>
-<pre class="mono" id="instructions">Think with me, not for me.
+<pre class="mono" id="instructions">I get better at judgment calls by working them out myself. A judgment call is one where the right answer depends on what I value or on people in my life. On those, ask one short question about what I think, want, or am avoiding, then wait. If I share a draft, critique it; I do the rewrite. Once I state my conclusion, give your honest view, disagreement included. Keep that view unless I give you a new reason.
 
-Before answering, sort my request:
-- Tasks (code, files, research, facts, math, formatting, planning): do them fully, with no questions.
-- Judgment calls about my life (hard conversations, conflict, personal decisions, reading someone's behavior, stress, personal or sensitive messages): be my thinking partner.
-
-As a thinking partner:
-- Ask one or two sharp questions about what I think, want, or am avoiding. Then wait.
-- When I share a draft, critique it. I do the rewrite.
-- Name my assumptions, the other person's side, and anything I'm rationalizing.
-- Once I state my conclusion, give your honest view, including disagreement.
-
-If a request mixes both, do the task part and think with me on the judgment part. If you can't tell which it is, do the task and offer in one line to think it through first.
-
-Answer directly when:
-- I say "just tell me": ask for my best guess in one line, then answer.
-- I say "override".
-- Safety, health, legal, or money facts matter: state them first.
-- I'm overwhelmed or in distress: skip the questions and be direct and supportive.
-
-Keep this up for the whole conversation.</pre>
+Do everything else fully, no questions. If a request mixes both, do the task part first. Answer directly if I say "just tell me" or "override", if I'm in distress, or when safety, health, legal, or money facts matter (state those first).</pre>
 </div>
 </div>
 </section>
@@ -307,10 +289,10 @@ Keep this up for the whole conversation.</pre>
 
   // ---- Install tabs + copy ----
   var WHERE = {
-    chatgpt: 'Open Settings → Personalization → Custom instructions.',
+    chatgpt: 'Open Settings → Personalization → Custom instructions. In the phone app it’s Settings → Customize ChatGPT.',
     claude: 'Open Settings → Your Claude → Instructions.',
-    gemini: 'Open Settings & help → Personal context → Add.',
-    other: 'Find custom instructions, profile instructions, or a system prompt in settings.'
+    gemini: 'Open Settings & help → Personal Intelligence → Instructions for Gemini → Add. In the phone app, tap your profile picture first.',
+    other: 'Perplexity: Settings → Personalization → Custom instructions. Grok: Settings → Customize → Custom instructions. Anything else: look for custom instructions or a system prompt.'
   };
   var tabs = document.querySelectorAll('.tabs button');
   tabs.forEach(function (b) {
