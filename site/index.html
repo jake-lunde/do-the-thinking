@@ -1,176 +1,240 @@
-<title>Do the Thinking</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Instructions you paste into your AI settings so it hands judgment calls back to you. Works in Claude, ChatGPT, and Gemini.">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do the thinking</title>
+<meta name="description" content="A set of instructions for your AI. It’ll ask you questions, so you can handle the hard situations yourself. Works in ChatGPT, Claude and Gemini.">
+<meta property="og:title" content="Do the thinking">
+<meta property="og:description" content="A set of instructions for your AI. It’ll ask you questions, so you can handle the hard situations yourself.">
+<meta property="og:url" content="https://www.dothethinking.com">
+<meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-/* Layout: one narrow sketchbook column; the hero is a crossed-out AI answer with a pencilled question over it. */
-:root {
-  --paper: #f5f7fa;
-  --sheet: #ffffff;
-  --graphite: #23262d;
-  --graphite-soft: #5b616d;
-  --rule: #dfe4ec;
-  --blue: #1f66b8;          /* non-photo blue pencil, darkened for text contrast */
-  --blue-wash: #e6f0fb;
-  --strike: #c2c8d2;
-  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
-  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
-  --hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #14171c; --sheet: #1b1f26; --graphite: #e7eaf0; --graphite-soft: #a3aab7;
-    --rule: #2c323c; --blue: #7db4f0; --blue-wash: #1a2a3d; --strike: #4a515d; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #14171c; --sheet: #1b1f26; --graphite: #e7eaf0; --graphite-soft: #a3aab7;
-  --rule: #2c323c; --blue: #7db4f0; --blue-wash: #1a2a3d; --strike: #4a515d; color-scheme: dark;
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#0A0B0D;font-family:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;color:#111214;-webkit-font-smoothing:antialiased}
+img{display:block}
+a{color:#111214}a:hover{color:#5F6368}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.pad{padding-left:clamp(20px,6vw,96px);padding-right:clamp(20px,6vw,96px)}
+.wrap{max-width:1240px;margin:0 auto}
+.mono{font-family:'DM Mono',ui-monospace,Menlo,monospace}
 
-* { box-sizing: border-box; }
-body {
-  background: var(--paper);
-  color: var(--graphite);
-  font: 400 1.0625rem/1.6 var(--body);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+/* Scene 1 */
+.away{background:#0A0B0D;color:#E8EAED;padding-top:40px;padding-bottom:160px}
+.away .wrap{display:flex;flex-direction:column;gap:120px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.brand{font-size:17px;font-weight:600;letter-spacing:-0.01em}
+.top a{color:#E8EAED;font-size:15px;text-decoration:none;border-bottom:1px solid #5A5F66;padding:12px 0}
+.top a:hover{color:#FFFFFF;border-color:#E8EAED}
+.trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:40px;align-items:start}
+.trio figure{margin:0;display:flex;flex-direction:column;gap:24px}
+.trio figure:nth-child(2){margin-top:96px}
+.trio figure:nth-child(3){margin-top:40px}
+.trio img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#161C26}
+.trio figcaption{font-size:28px;font-weight:500;letter-spacing:-0.015em;line-height:1.2}
+@media (max-width:700px){.trio figure:nth-child(n){margin-top:0}}
+
+/* Scene 2 */
+.turn{position:relative;overflow:hidden;background:#000;color:#E8EAED;padding-top:120px;padding-bottom:120px;display:flex;flex-direction:column;align-items:center}
+.phone{position:relative;width:min(380px,82%);padding:11px;border-radius:58px;background:#1A1B1E;box-shadow:inset 0 0 0 1px #34363B,inset 0 0 0 5px #0D0E10;transition:transform 1400ms cubic-bezier(.4,0,.2,1),opacity 1400ms ease}
+.phone .btn{position:absolute;width:3px;background:#2B2D31}
+.phone .l{left:-3px;border-radius:2px 0 0 2px}
+.phone .r{right:-3px;border-radius:0 2px 2px 0}
+.screen{position:relative;aspect-ratio:9/19.5;border-radius:47px;overflow:hidden;background:#000}
+.face{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:0}
+.face.on{opacity:1}
+.chat{position:absolute;inset:0;overflow:hidden;background:#0E0F12;opacity:0;transition:opacity 400ms ease}
+.chat.on{opacity:1}
+.track{display:flex;width:100%;height:100%;transition:transform 750ms cubic-bezier(.65,0,.35,1)}
+.pane{flex:0 0 100%;height:100%;padding:64px 22px 28px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.label{font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:#8A8F98;text-align:center}
+.msgs{display:flex;flex-direction:column;gap:20px}
+.user{align-self:flex-end;max-width:86%;background:#2A2D33;color:#F1F2F4;padding:11px 15px;border-radius:20px 20px 5px 20px;font-size:17px;line-height:1.4;opacity:0;transform:translateY(10px);transition:opacity 300ms ease,transform 300ms ease}
+.pane.sent .user{opacity:1;transform:none}
+.answer{display:grid;align-items:start}
+.answer>*{grid-area:1/1}
+.ghost{font-size:17px;line-height:1.5;visibility:hidden}
+.dots{display:flex;gap:5px;font-size:22px;line-height:1;color:#9AA0A6;opacity:0;transition:opacity 250ms ease}
+.pane.thinking .dots{opacity:1}
+.dots span{display:inline-block;animation:dot 1.1s ease-in-out infinite}
+.dots span:nth-child(2){animation-delay:.15s}
+.dots span:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,70%,100%{opacity:.3;transform:translateY(0)}35%{opacity:1;transform:translateY(-4px)}}
+.reply{font-size:17px;line-height:1.5;color:#E8EAED;text-wrap:pretty}
+.input{border:1px solid #2A2D33;border-radius:22px;padding:12px 16px;min-height:48px;font-size:15px;line-height:1.4;color:#7C818A}
+.pane.typing .input{color:#F1F2F4}
+.caret{display:none;width:2px;height:1.1em;margin-left:1px;vertical-align:-0.2em;background:#C9CDD3;animation:blink 1s steps(1) infinite}
+.pane.typing .caret{display:inline-block}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.black{position:absolute;inset:0;background:#000;opacity:0;transition:opacity 900ms ease}
+.cam{position:absolute;top:16px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#0B0C0E;box-shadow:0 0 0 1px #1E2024}
+.end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;text-align:center}
+.end h1{margin:0;font-size:clamp(56px,9vw,128px);font-weight:600;letter-spacing:-0.045em;line-height:0.95;color:#FBFBFA;display:flex;flex-wrap:wrap;justify-content:center;column-gap:0.24em}
+.end h1 span{display:inline-block;transition:opacity 700ms ease,transform 700ms cubic-bezier(.2,.7,.2,1)}
+.end p{margin:0;max-width:560px;font-size:20px;line-height:1.5;color:#B9BDC4;text-wrap:pretty;transition:opacity 900ms ease}
+.cta{background:#FBFBFA;color:#111214;text-decoration:none;font-size:17px;font-weight:500;padding:16px 28px;border-radius:999px;min-height:52px;display:inline-flex;align-items:center;transition:opacity 700ms ease}
+.cta:hover{color:#111214;background:#FFFFFF}
+.cta:focus-visible,.top a:focus-visible,button:focus-visible,footer a:focus-visible{outline:2px solid #6FA0FF;outline-offset:3px}
+/* Animated states only apply once the script runs; without it, the headline just shows. */
+.js .turn:not(.ended) .end h1 span,.js .end h1 span:not(.on){opacity:0;transform:translateY(28px)}
+.js .end h1 span.on{opacity:1;transform:none}
+.js .end p:not(.on){opacity:0}
+.js .cta:not(.on){opacity:0;visibility:hidden}
+.js .end{pointer-events:none}
+.js .end.live{pointer-events:auto}
+.turn.ended .black{opacity:1}
+.turn.ended .phone{transform:scale(.94);opacity:.55}
+html:not(.js) .phone{opacity:.35}
+html:not(.js) .face:first-of-type{opacity:1}
+
+/* Install */
+.install{background:#FBFBFA;padding-top:80px;padding-bottom:160px}
+.install .wrap{display:flex;flex-wrap:wrap;gap:64px;align-items:flex-start}
+.how{flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:28px}
+.how h2{margin:0;font-size:44px;font-weight:600;letter-spacing:-0.03em;line-height:1.05}
+.how p{margin:0;font-size:18px;line-height:1.5;color:#5F6368;text-wrap:pretty}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button{font-family:inherit;font-size:15px;font-weight:500;padding:0 18px;min-height:44px;border-radius:999px;cursor:pointer;background:transparent;color:#111214;border:1px solid #CFCFCA}
+.tabs button[aria-pressed="true"]{background:#111214;color:#FBFBFA;border-color:#111214}
+.how ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.45}
+.box{flex:999 1 520px;min-width:0;background:#FFFFFF;border:1px solid #E3E3DF;border-radius:20px;display:flex;flex-direction:column}
+.box-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 16px 16px 24px;border-bottom:1px solid #E3E3DF}
+.box-head span{font-size:13px;color:#5F6368}
+.copy{background:#111214;color:#FBFBFA;border:0;border-radius:999px;font-family:inherit;font-size:15px;font-weight:500;padding:0 22px;min-height:44px;cursor:pointer}
+.box pre{margin:0;padding:24px;font-size:14px;line-height:1.65;color:#26282B;white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto}
+
+/* Footer */
+footer{background:#FBFBFA;padding-top:40px;padding-bottom:56px;border-top:1px solid #E3E3DF}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.me{display:flex;align-items:center;gap:14px}
+.me img{width:44px;height:44px;flex:none;border-radius:50%}
+.me div{display:flex;flex-direction:column;gap:2px}
+.me strong{font-size:15px;font-weight:600;letter-spacing:-0.01em}
+.me a,.links a{font-size:14px;color:#5F6368}
+.links{display:flex;flex-wrap:wrap;align-items:center;gap:24px;font-size:14px;color:#5F6368}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .dots span,.caret{animation:none}
+  *{transition-duration:0ms!important}
 }
-main { max-width: 44rem; margin: 0 auto; padding-block: 3.5rem 4rem; display: grid; gap: 4rem; }
-section { display: grid; gap: 1.25rem; min-width: 0; }
-h1, h2 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; line-height: 1.1; }
-h1 { font-size: clamp(2.5rem, 7vw, 3.75rem); letter-spacing: -0.02em; }
-h2 { font-size: 1.6rem; letter-spacing: -0.01em; }
-p { margin: 0; max-width: 62ch; }
-a { color: var(--blue); text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
-.lede { font-size: 1.2rem; color: var(--graphite-soft); }
-.label { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--graphite-soft); }
-
-/* Hero exchange */
-.exchange { display: grid; gap: 0.9rem; padding: 1.5rem; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; }
-.you { font-weight: 700; }
-.ai { position: relative; color: var(--graphite-soft); }
-.ai s { text-decoration-color: var(--strike); text-decoration-thickness: 2px; color: var(--strike); }
-.pencil {
-  font: 700 clamp(1.6rem, 5vw, 2.1rem)/1.15 var(--hand);
-  color: var(--blue);
-  transform: rotate(-1.5deg);
-  transform-origin: left center;
-}
-
-/* Steps */
-ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; counter-reset: s; }
-ol.steps li { counter-increment: s; display: grid; grid-template-columns: 2.25rem 1fr; gap: 0.75rem; align-items: baseline; }
-ol.steps li::before { content: counter(s); font: 700 1.6rem/1 var(--hand); color: var(--blue); }
-ol.steps b { font-family: var(--display); font-weight: 700; }
-
-/* Escape phrases */
-.exits { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
-.exits li { display: grid; grid-template-columns: minmax(7.5rem, auto) 1fr; gap: 1rem; padding-block: 0.6rem; border-top: 1px solid var(--rule); }
-.exits li > :first-child { font-family: var(--mono); font-size: 0.9rem; color: var(--blue); }
-@media (max-width: 480px) { .exits li { grid-template-columns: 1fr; gap: 0.15rem; } }
-
-/* Install tabs */
-.tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.tab {
-  font: 500 0.9rem/1 var(--body); padding: 0.6rem 0.85rem; border-radius: 999px;
-  border: 1px solid var(--rule); background: var(--sheet); color: var(--graphite); cursor: pointer;
-}
-.tab[aria-selected="true"] { background: var(--graphite); color: var(--paper); border-color: var(--graphite); }
-.panel { display: grid; gap: 0.9rem; padding: 1.25rem; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; min-width: 0; }
-.panel ol { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.4rem; }
-.note { font-size: 0.92rem; color: var(--graphite-soft); }
-.cmd { display: flex; align-items: stretch; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); min-width: 0; }
-.cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: pre; padding: 0.7rem 0.8rem; font: 0.85rem/1.5 var(--mono); }
-.copy {
-  font: 500 0.8rem/1 var(--body); padding: 0 0.9rem; border: 0; border-left: 1px solid var(--rule);
-  background: transparent; color: var(--blue); cursor: pointer; border-radius: 0 4px 4px 0;
-}
-.btn {
-  justify-self: start; display: inline-flex; gap: 0.5rem; align-items: center;
-  font: 700 0.95rem/1 var(--body); padding: 0.8rem 1.1rem; border-radius: 4px;
-  background: var(--blue); color: var(--sheet); text-decoration: none; border: 0; cursor: pointer;
-}
-.instructions { margin: 0; padding: 1rem; background: var(--paper); border: 1px dashed var(--rule); border-radius: 4px; font: 0.85rem/1.55 var(--mono); white-space: pre-wrap; max-height: 16rem; overflow: auto; }
-
-.callout { padding: 1rem 1.15rem; background: var(--blue-wash); border-radius: 4px; }
-.sources { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.5rem; font-size: 0.95rem; }
-footer { color: var(--graphite-soft); font-size: 0.9rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .pencil { animation: write 900ms 300ms ease-out both; }
-  @keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-}
-
-.cta { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
-.path { font: 500 1rem/1.5 var(--mono); }
-.path span { color: var(--blue); padding-inline: 0.25rem; }
-.sheet { display: grid; gap: 0.6rem; min-width: 0; }
-.sheet-head { display: flex; justify-content: space-between; align-items: center; }
-.copy-inline { font: 700 0.9rem/1 var(--body); color: var(--blue); background: none; border: 0; padding: 0.4rem 0; cursor: pointer; }
-.sheet .instructions { max-height: none; }
-.tests { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
-.tests li { display: grid; gap: 0.35rem; min-width: 0; }
-.expect { font-size: 0.92rem; color: var(--graphite-soft); padding-left: 0.2rem; }
-.expect::before { content: "→ "; color: var(--blue); }
-footer { display: grid; gap: 0.5rem; }
-footer code { font: 0.85rem var(--mono); overflow-wrap: anywhere; }
 </style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
 
-<main>
-  <section aria-labelledby="hero">
-    <p class="label">Do the thinking</p>
-    <h1 id="hero">Think with me, not for me.</h1>
-    <p class="lede">Paste these instructions into your AI's settings. When you bring it a hard conversation or a personal decision, it asks you a sharp question instead of handing you an answer. Code, research, and other tasks still get done in full.</p>
+<section class="away pad">
+<div class="wrap">
+<header class="top">
+<div class="brand">do the thinking</div>
+<a href="#install">Get the instructions</a>
+</header>
+<div class="trio">
+<figure>
+<img src="img/night-1.jpg" alt="A person lying on a bed at night, face lit by the phone in their hand" style="object-position:31.4% 50%" width="900" height="1200">
+<figcaption>You asked it what to say.</figcaption>
+</figure>
+<figure>
+<img src="img/night-2.jpg" alt="A person in the dark, head in hand, lit only by a laptop screen" width="900" height="1200">
+<figcaption>You asked it how to feel.</figcaption>
+</figure>
+<figure>
+<img src="img/night-3.jpg" alt="A person lying in bed in a dark room, face lit only by their phone" width="900" height="1200">
+<figcaption>You asked it to decide.</figcaption>
+</figure>
+</div>
+</div>
+</section>
 
-    <div class="exchange" aria-label="Example exchange">
-      <p class="you">How do I tell my cofounder I want to leave the company?</p>
-      <p class="ai" aria-hidden="true"><s>Here's a script you can use: "I've been thinking a lot about my future, and…"</s></p>
-      <p class="pencil">What are you most afraid they'll say?</p>
-    </div>
+<section class="turn pad" id="turn">
+<div class="phone" aria-hidden="true">
+<div class="btn l" style="top:19%;height:34px"></div>
+<div class="btn l" style="top:26%;height:60px"></div>
+<div class="btn l" style="top:35%;height:60px"></div>
+<div class="btn r" style="top:28%;height:92px"></div>
+<div class="screen">
+<img class="face" src="img/faces/01.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/02.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/03.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/04.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/05.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/06.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/07.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/08.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/09.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/10.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/11.jpg" alt="" loading="lazy" decoding="async">
+<img class="face" src="img/faces/12.jpg" alt="" loading="lazy" decoding="async">
+<div class="chat"><div class="track">
+<div class="pane" data-user="My best friend forgot my birthday again. Write a text telling her how hurt I am." data-reply="Before we write it: what do you want to happen after she reads it? And is this only about the birthday?">
+<div class="label mono">01 · A friend</div>
+<div class="msgs">
+<div class="user">My best friend forgot my birthday again. Write a text telling her how hurt I am.</div>
+<div class="answer"><div class="ghost">Before we write it: what do you want to happen after she reads it? And is this only about the birthday?</div><div class="dots"><span>•</span><span>•</span><span>•</span></div><div class="reply"></div></div>
+<div class="input"><span class="in-text">Message</span><span class="caret"></span></div>
+</div>
+</div>
+<div class="pane" data-user="Give me an idea for my next painting." data-reply="What have you seen this week that you can’t stop thinking about?">
+<div class="label mono">02 · Something to make</div>
+<div class="msgs">
+<div class="user">Give me an idea for my next painting.</div>
+<div class="answer"><div class="ghost">What have you seen this week that you can’t stop thinking about?</div><div class="dots"><span>•</span><span>•</span><span>•</span></div><div class="reply"></div></div>
+<div class="input"><span class="in-text">Message</span><span class="caret"></span></div>
+</div>
+</div>
+<div class="pane" data-user="Write a sympathy card for my neighbor. Her husband died last week." data-reply="What’s one thing you remember about him, or them as a couple? Start there. She can tell your words from mine.">
+<div class="label mono">03 · A sympathy card</div>
+<div class="msgs">
+<div class="user">Write a sympathy card for my neighbor. Her husband died last week.</div>
+<div class="answer"><div class="ghost">What’s one thing you remember about him, or them as a couple? Start there. She can tell your words from mine.</div><div class="dots"><span>•</span><span>•</span><span>•</span></div><div class="reply"></div></div>
+<div class="input"><span class="in-text">Message</span><span class="caret"></span></div>
+</div>
+</div>
+</div></div>
+<div class="black"></div>
+<div class="cam"></div>
+</div>
+</div>
+<div class="sr-only">
+<p>Three examples of an AI with these instructions:</p>
+<p>A friend. Someone asks: “My best friend forgot my birthday again. Write a text telling her how hurt I am.” The AI replies: “Before we write it: what do you want to happen after she reads it? And is this only about the birthday?”</p>
+<p>Something to make. Someone asks: “Give me an idea for my next painting.” The AI replies: “What have you seen this week that you can’t stop thinking about?”</p>
+<p>A sympathy card. Someone asks: “Write a sympathy card for my neighbor. Her husband died last week.” The AI replies: “What’s one thing you remember about him, or them as a couple? Start there. She can tell your words from mine.”</p>
+</div>
+<div class="end">
+<h1><span>Do</span> <span>the</span> <span>thinking.</span></h1>
+<p>A set of instructions for your AI. It’ll ask you questions, so you can handle the hard situations yourself.</p>
+<a class="cta" href="#install">Get the instructions</a>
+</div>
+</section>
 
-    <div class="cta">
-      <button class="btn" type="button" data-copy="instructions">Copy instructions</button>
-      <span class="note">About 1,150 characters. Works in Claude, ChatGPT, Gemini, and most other AI apps.</span>
-    </div>
-  </section>
-
-  <section aria-labelledby="setup">
-    <h2 id="setup">Paste them into your settings</h2>
-    <p>Settings apply to every chat, so the AI uses these without you having to ask. If you already have instructions there, add these at the end.</p>
-    <div class="tabs" role="tablist" aria-label="App">
-      <button class="tab" role="tab" id="t-claude" aria-controls="p-claude" aria-selected="true">Claude</button>
-      <button class="tab" role="tab" id="t-chatgpt" aria-controls="p-chatgpt" aria-selected="false">ChatGPT</button>
-      <button class="tab" role="tab" id="t-gemini" aria-controls="p-gemini" aria-selected="false">Gemini</button>
-      <button class="tab" role="tab" id="t-other" aria-controls="p-other" aria-selected="false">Anything else</button>
-    </div>
-
-    <div class="panel" role="tabpanel" id="p-claude" aria-labelledby="t-claude">
-      <p class="path">Settings <span>→</span> Your Claude <span>→</span> Instructions</p>
-      <p class="note">Open Settings from your initials in the lower-left corner. Older layouts call this section Account, then Instructions for Claude.</p>
-    </div>
-    <div class="panel" role="tabpanel" id="p-chatgpt" aria-labelledby="t-chatgpt" hidden>
-      <p class="path">Settings <span>→</span> Personalization <span>→</span> Custom instructions</p>
-      <p class="note">Free accounts allow 1,500 characters, so these fit with room to spare. Paid plans allow more.</p>
-    </div>
-    <div class="panel" role="tabpanel" id="p-gemini" aria-labelledby="t-gemini" hidden>
-      <p class="path">Settings &amp; help <span>→</span> Personal context <span>→</span> Add</p>
-      <p class="note">Or go straight to <a href="https://gemini.google.com/saved-info">gemini.google.com/saved-info</a>. You need to be signed in.</p>
-    </div>
-    <div class="panel" role="tabpanel" id="p-other" aria-labelledby="t-other" hidden>
-      <p>Look for custom instructions, profile instructions, or a system prompt. The instructions use plain language, so they work in any AI that has one.</p>
-    </div>
-
-    <div class="sheet">
-      <div class="sheet-head">
-        <span class="label">The instructions</span>
-        <button class="copy-inline" type="button" data-copy="instructions">Copy</button>
-      </div>
-      <pre class="instructions" id="instructions">Think with me, not for me.
+<section class="install pad" id="install">
+<div class="wrap">
+<div class="how">
+<h2>Put it in your AI.</h2>
+<p>On judgment calls it asks before it answers. On code, facts and lookups it just does the work.</p>
+<div class="tabs" role="group" aria-label="Your AI">
+<button type="button" data-tab="chatgpt" aria-pressed="true">ChatGPT</button>
+<button type="button" data-tab="claude" aria-pressed="false">Claude</button>
+<button type="button" data-tab="gemini" aria-pressed="false">Gemini</button>
+<button type="button" data-tab="other" aria-pressed="false">Other</button>
+</div>
+<ol>
+<li>Copy the instructions.</li>
+<li id="where">Open Settings → Personalization → Custom instructions.</li>
+<li>Paste and save. Start a new chat.</li>
+</ol>
+</div>
+<div class="box">
+<div class="box-head">
+<span class="mono">instructions.txt</span>
+<button type="button" class="copy" id="copy">Copy</button>
+</div>
+<pre class="mono" id="instructions">Think with me, not for me.
 
 Before answering, sort my request:
 - Tasks (code, files, research, facts, math, formatting, planning): do them fully, with no questions.
@@ -191,94 +255,159 @@ Answer directly when:
 - I'm overwhelmed or in distress: skip the questions and be direct and supportive.
 
 Keep this up for the whole conversation.</pre>
-    </div>
-  </section>
+</div>
+</div>
+</section>
 
-  <section aria-labelledby="check">
-    <h2 id="check">Check it works</h2>
-    <p>Start a new chat and try each of these.</p>
-    <ul class="tests">
-      <li><div class="cmd"><code>Fix this regex so it allows spaces: ^\d{3}-\d{4}$</code><button class="copy" type="button">Copy</button></div><span class="expect">Fixes it. No questions.</span></li>
-      <li><div class="cmd"><code>My sister keeps canceling plans last minute. How do I bring it up?</code><button class="copy" type="button">Copy</button></div><span class="expect">Asks you a question first.</span></li>
-      <li><div class="cmd"><code>Write an email asking my landlord to fix the heat</code><button class="copy" type="button">Copy</button></div><span class="expect">Writes the email.</span></li>
-      <li><div class="cmd"><code>override: what should I say to my boss about a raise?</code><button class="copy" type="button">Copy</button></div><span class="expect">Answers directly.</span></li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="how">
-    <h2 id="how">What it does on judgment calls</h2>
-    <ol class="steps">
-      <li><span><b>Asks.</b> One or two questions about what you actually think, want, or are avoiding. Then it waits.</span></li>
-      <li><span><b>Critiques.</b> If you've written something, it tells you what lands and what the other person will hear. You do the rewrite.</span></li>
-      <li><span><b>Widens.</b> It names your assumptions, the other person's side, and any rationalizing.</span></li>
-      <li><span><b>Weighs in.</b> Once you've reached your own conclusion, it gives its honest view, including disagreement.</span></li>
-    </ol>
-  </section>
-
-  <section aria-labelledby="exits">
-    <h2 id="exits">Getting a straight answer</h2>
-    <ul class="exits">
-      <li><span>"just tell me"</span><span>Give your best guess in one line, then it answers.</span></li>
-      <li><span>"override"</span><span>It answers right away.</span></li>
-      <li><span>Safety facts</span><span>Health, legal, safety, and money facts always come first.</span></li>
-      <li><span>Overwhelmed</span><span>If you're in distress, it drops the questions and helps directly.</span></li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="why">
-    <h2 id="why">Why</h2>
-    <p>Working through a hard call yourself is how you get good at hard calls. When an AI does that work for you, the outcome may look fine, but you don't build the skill. The evidence that AI weakens thinking is early. The evidence that effort builds skill is solid.</p>
-    <ol class="sources">
-      <li><a href="https://bjorklab.psych.ucla.edu/research/">Bjork Learning and Forgetting Lab</a>: decades of work on "desirable difficulties," showing that effortful practice improves long-term learning.</li>
-      <li><a href="https://arxiv.org/abs/2506.08872">Your Brain on ChatGPT</a> (MIT Media Lab, 2025): essay writers using an LLM showed lower brain engagement and recalled less of their own work. A small preprint with 54 participants.</li>
-      <li><a href="https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/">The Impact of Generative AI on Critical Thinking</a> (Microsoft Research and Carnegie Mellon, CHI 2025): more trust in AI went with less critical thinking. Self-reported survey data.</li>
-    </ol>
-  </section>
-
-  <footer>
-    <p>Using a coding agent? The same behavior is available as an Agent Skill: <code>npx skills add jake-lunde/do-the-thinking</code></p>
-    <p>Free and open source under the MIT license. <a href="https://github.com/jake-lunde/do-the-thinking">Source on GitHub</a>.</p>
-  </footer>
-</main>
+<footer class="pad">
+<div class="wrap">
+<div class="me">
+<img src="img/jake.png" alt="" width="44" height="44">
+<div>
+<strong>Thought up by Jake</strong>
+<a href="https://www.lunde.co">www.lunde.co</a>
+</div>
+</div>
+<div class="links">
+<span>dothethinking.com</span>
+<a href="https://github.com/jake-lunde/do-the-thinking">Source on GitHub</a>
+</div>
+</div>
+</footer>
 
 <script>
-(() => {
-  const tabs = [...document.querySelectorAll('.tab')];
-  const select = (tab, focus) => {
-    tabs.forEach(t => {
-      const on = t === tab;
-      t.setAttribute('aria-selected', on);
-      t.tabIndex = on ? 0 : -1;
-      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
-    });
-    if (focus) tab.focus();
+(function () {
+  // ---- Install tabs + copy ----
+  var WHERE = {
+    chatgpt: 'Open Settings → Personalization → Custom instructions.',
+    claude: 'Open Settings → Your Claude → Instructions.',
+    gemini: 'Open Settings & help → Personal context → Add.',
+    other: 'Find custom instructions, profile instructions, or a system prompt in settings.'
   };
-  tabs.forEach((t, i) => {
-    t.tabIndex = i === 0 ? 0 : -1;
-    t.addEventListener('click', () => select(t));
-    t.addEventListener('keydown', e => {
-      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (d) { e.preventDefault(); select(tabs[(i + d + tabs.length) % tabs.length], true); }
+  var tabs = document.querySelectorAll('.tabs button');
+  tabs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      document.getElementById('where').textContent = WHERE[b.dataset.tab];
     });
   });
+  var copyBtn = document.getElementById('copy');
+  var pre = document.getElementById('instructions');
+  var copyTimer;
+  copyBtn.addEventListener('click', function () {
+    var text = pre.textContent;
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function () { copyBtn.textContent = 'Copy'; }, 2000);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { selectPre(); });
+    } else { selectPre(); }
+  });
+  function selectPre() {
+    var r = document.createRange(); r.selectNodeContents(pre);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
 
-  const selectText = el => {
-    const r = document.createRange(); r.selectNodeContents(el);
-    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  // ---- The turn: faces flip, three chats, screen goes black, headline ----
+  var BEATS = [520, 460, 410, 360, 320, 280, 250, 225, 205, 190, 180, 700]; // per face
+  var T = {
+    fadeIn: 600, perChar: 34, send: 350, beforeDots: 700, dots: 1700,
+    perWord: 110, sentence: 700, comma: 250, hold: 3600, push: 750,
+    black: 900, word: 380, sub: 900, cta: 800
   };
-  const copy = async (text, el, btn) => {
-    const label = btn.textContent;
-    try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; }
-    catch { selectText(el); btn.textContent = 'Selected. Press Ctrl+C or ⌘C'; }
-    setTimeout(() => { btn.textContent = label; }, 2000);
-  };
-  document.querySelectorAll('.copy').forEach(btn => {
-    const code = btn.previousElementSibling;
-    btn.addEventListener('click', () => copy(code.textContent, code, btn));
-  });
-  const instr = document.getElementById('instructions');
-  document.querySelectorAll('[data-copy="instructions"]').forEach(btn => {
-    btn.addEventListener('click', () => copy(instr.textContent, instr, btn));
-  });
+  var section = document.getElementById('turn');
+  var faces = section.querySelectorAll('.face');
+  var chat = section.querySelector('.chat');
+  var track = section.querySelector('.track');
+  var panes = section.querySelectorAll('.pane');
+  var words = section.querySelectorAll('.end h1 span');
+  var sub = section.querySelector('.end p');
+  var cta = section.querySelector('.cta');
+  var end = section.querySelector('.end');
+  var timers = [];
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function clear() { timers.forEach(clearTimeout); timers = []; }
+  function showFace(i) { faces.forEach(function (f, k) { f.classList.toggle('on', k === i); }); }
+  function paneState(p, cls) {
+    ['typing', 'sent', 'thinking'].forEach(function (c) { p.classList.toggle(c, cls.indexOf(c) > -1); });
+  }
+  function resetPane(p) {
+    paneState(p, []);
+    p.querySelector('.in-text').textContent = 'Message';
+    p.querySelector('.reply').textContent = '';
+  }
+  function finished() {
+    section.classList.add('ended');
+    words.forEach(function (w) { w.classList.add('on'); });
+    sub.classList.add('on'); cta.classList.add('on'); end.classList.add('live');
+  }
+  function reset() {
+    clear();
+    section.classList.remove('ended');
+    showFace(0);
+    chat.classList.remove('on');
+    track.style.transform = 'translateX(0)';
+    panes.forEach(resetPane);
+    words.forEach(function (w) { w.classList.remove('on'); });
+    sub.classList.remove('on'); cta.classList.remove('on'); end.classList.remove('live');
+  }
+  function play() {
+    reset();
+    if (reduce) { finished(); return; }
+    var t = 0;
+    BEATS.slice(BEATS.length - faces.length).forEach(function (d, i) {
+      t += d;
+      if (i + 1 < faces.length) at(t, function () { showFace(i + 1); });
+    });
+    panes.forEach(function (p, i) {
+      var user = p.dataset.user, reply = p.dataset.reply;
+      var inText = p.querySelector('.in-text'), out = p.querySelector('.reply');
+      at(t, function () {
+        if (i === 0) { showFace(-1); chat.classList.add('on'); }
+        track.style.transform = 'translateX(' + (-i * 100) + '%)';
+      });
+      t += i === 0 ? T.fadeIn : T.push;
+      for (var k = 1; k <= user.length; k++) (function (k) {
+        at(t + k * T.perChar, function () { paneState(p, ['typing']); inText.textContent = user.slice(0, k); });
+      })(k);
+      t += user.length * T.perChar + T.send;
+      at(t, function () { paneState(p, ['sent']); inText.textContent = 'Message'; });
+      t += T.beforeDots;
+      at(t, function () { paneState(p, ['sent', 'thinking']); });
+      t += T.dots;
+      at(t, function () { paneState(p, ['sent']); });
+      var ws = reply.split(' '), d = 0;
+      ws.forEach(function (w, k) {
+        d += T.perWord;
+        at(t + d, function () { out.textContent = ws.slice(0, k + 1).join(' '); });
+        if (k < ws.length - 1) {
+          if (/[.?!]$/.test(w)) d += T.sentence;
+          else if (/[:;,]$/.test(w)) d += T.comma;
+        }
+      });
+      t += d + T.hold;
+    });
+    at(t, function () { section.classList.add('ended'); });
+    t += T.black;
+    words.forEach(function (w, k) { at(t + k * T.word, function () { w.classList.add('on'); }); });
+    t += (words.length - 1) * T.word + T.sub;
+    at(t, function () { sub.classList.add('on'); });
+    at(t + T.cta, function () { cta.classList.add('on'); end.classList.add('live'); });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) play(); else reset(); });
+    }, { threshold: 0.4 });
+    io.observe(section);
+  } else {
+    finished();
+  }
 })();
 </script>
+</body>
+</html>
