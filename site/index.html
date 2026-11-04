@@ -58,6 +58,11 @@ a{color:#111214}a:hover{color:#5F6368}
 .screen{position:relative;aspect-ratio:9/19.5;border-radius:47px;overflow:hidden;background:#000}
 .face{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:0}
 .face.on{opacity:1}
+.boot{position:absolute;inset:0;background:#0E0F12;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+.boot .tile{width:112px;height:112px;border-radius:28px;background:#16171B;box-shadow:inset 0 0 0 1px #2A2D33;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 600ms ease}
+.boot .tile img{width:72px;height:auto}
+.boot p{margin:0;font-size:20px;font-weight:500;letter-spacing:-0.01em;color:#E8EAED;opacity:0;transition:opacity 600ms ease}
+.boot.logo .tile,.boot.hello p{opacity:1}
 .chat{position:absolute;inset:0;overflow:hidden;background:#0E0F12;opacity:0;transition:opacity 400ms ease}
 .chat.on{opacity:1}
 .track{display:flex;width:100%;height:100%;transition:transform 750ms cubic-bezier(.65,0,.35,1)}
@@ -135,6 +140,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
   .dots span{opacity:.7}
   .track{transition:none}
   .user,.end h1 span,.turn.ended .phone{transform:none!important}
+  /* Reduce Motion: a short "boot" screen replaces the face flip */
+  .js .boot{display:flex}
+  .js .face{display:none}
 }
 </style>
 <script>document.documentElement.classList.add('js')</script>
@@ -185,6 +193,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 <img class="face" src="img/faces/10.jpg" alt="" loading="lazy" decoding="async">
 <img class="face" src="img/faces/11.jpg" alt="" loading="lazy" decoding="async">
 <img class="face" src="img/faces/12.jpg" alt="" loading="lazy" decoding="async">
+<div class="boot"><div class="tile"><img src="img/ai-mark.svg" alt=""></div><p>I’m here to help!</p></div>
 <div class="chat"><div class="track">
 <div class="pane" data-user="My best friend forgot my birthday again. Write a text telling her how hurt I am." data-reply="Before we write it: what do you want to happen after she reads it? And is this only about the birthday?">
 <div class="label mono">01 · A friend</div>
@@ -336,6 +345,7 @@ Keep this up for the whole conversation.</pre>
   var section = document.getElementById('turn');
   var faces = section.querySelectorAll('.face');
   var chat = section.querySelector('.chat');
+  var boot = section.querySelector('.boot');
   var track = section.querySelector('.track');
   var panes = section.querySelectorAll('.pane');
   var words = section.querySelectorAll('.end h1 span');
@@ -365,6 +375,7 @@ Keep this up for the whole conversation.</pre>
   function reset() {
     clear();
     playing = false;
+    boot.classList.remove('logo', 'hello');
     section.classList.remove('ended');
     showFace(0);
     chat.classList.remove('on');
@@ -377,8 +388,12 @@ Keep this up for the whole conversation.</pre>
     reset();
     playing = true;
     var t = 0;
-    // Reduce Motion: no rapid face flipping; hold the first face, then go to the chats.
-    if (reduce) t = 1200;
+    // Reduce Motion: no rapid face flipping; a quick boot screen instead.
+    if (reduce) {
+      at(300, function () { boot.classList.add('logo'); });
+      at(1100, function () { boot.classList.add('hello'); });
+      t = 2900;
+    }
     else BEATS.slice(BEATS.length - faces.length).forEach(function (d, i) {
       t += d;
       if (i + 1 < faces.length) at(t, function () { showFace(i + 1); });
